@@ -1,0 +1,8 @@
+{
+  "name": "PAES 413 Biogas Plant E-Portfolio",
+  "description": "Interactive Agricultural and Biosystems Engineering e-portfolio and 3D Three.js biogas plant simulation for PAES 413:2001 compliance assessment (BABE 101, WMSU).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

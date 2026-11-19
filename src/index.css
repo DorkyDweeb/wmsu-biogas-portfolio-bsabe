@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  .font-mono, code, pre, .tabular-nums {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes coverFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes coverDrawPath {
+  from {
+    stroke-dashoffset: 600;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes coverBubbleRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-38px);
+  }
+}
+
+@keyframes coverGasFlow {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(108px);
+  }
+}
+
+.cover-stagger {
+  opacity: 0;
+  animation: coverFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cover-draw {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: coverDrawPath 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cover-bubble {
+  animation: coverBubbleRise 2.8s ease-out infinite;
+}
+
+.cover-gas-tracer {
+  animation: coverGasFlow 2.8s linear infinite;
+}
+
+/* Subtle compositor-only section scroll reveal */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.section-reveal[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .cover-stagger,
+  .cover-draw,
+  .cover-bubble,
+  .cover-gas-tracer,
+  .section-reveal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* Custom hairline scrollbars for dense tables */
+.thin-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+.print-only {
+  display: none;
+}
+
+/* Print stylesheet so the 11-section E-Portfolio prints cleanly as a formal A4 engineering report */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 14mm 14mm 16mm 14mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  header,
+  aside,
+  canvas,
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-report-grid {
+    display: block !important;
+  }
+
+  .section-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html,
+  body,
+  main,
+  footer,
+  section,
+  article,
+  div,
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  body,
+  p,
+  li,
+  td,
+  span,
+  strong {
+    color: #0f172a !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  th {
+    color: #020617 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* High-contrast semantic ink for status indicators on white paper */
+  .text-emerald-400,
+  .text-emerald-300,
+  .text-teal-400,
+  .text-teal-300 {
+    color: #047857 !important;
+  }
+
+  .text-rose-400,
+  .text-rose-300 {
+    color: #be123c !important;
+  }
+
+  .text-amber-400,
+  .text-amber-300 {
+    color: #b45309 !important;
+  }
+
+  .text-slate-400,
+  .text-slate-500 {
+    color: #475569 !important;
+  }
+
+  /* Allow long sections to flow naturally across pages while keeping cards/rows/figures intact */
+  section {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  article,
+  tr,
+  figure,
+  svg,
+  .print-avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  table {
+    font-size: 10px !important;
+  }
+
+  .print-break-before {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .print-break-after {
+    break-after: page;
+    page-break-after: always;
+  }
+}
